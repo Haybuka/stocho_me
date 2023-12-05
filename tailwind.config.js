@@ -5,7 +5,13 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        stochostech: {
+          DEFAULT: "#009947"
+        }
+      }
+    },
   },
   plugins: [],
 }
