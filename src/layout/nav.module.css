@@ -1,0 +1,12 @@
+.navItem {
+  @apply my-3 py-3 capitalize relative cursor-pointer transition-all flex items-center;
+}
+
+.navItem::after {
+  @apply absolute top-0 left-0 w-2 h-full transition-all bg-transparent;
+}
+
+.active::after {
+  @apply bg-stochostech;
+  content: '';
+}
