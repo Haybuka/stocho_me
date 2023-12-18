@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-const Input = ({ title, placeholder, type, name }) => {
+const Input = ({ title, placeholder, type, field, error }) => {
   const [viewType, setViewType] = useState(false);
 
   const handleViewPassword = () => {
@@ -10,13 +10,12 @@ const Input = ({ title, placeholder, type, name }) => {
   };
 
   return (
-    <label className="block my-3">
+    <label className="block my-6">
       <p className="text-[#4C4C4C]">{title}</p>
       <aside className="relative">
         <input
           type={viewType ? 'text' : type}
-          name={name}
-          id={name}
+          {...field}
           placeholder={placeholder}
           className="border-gray-200 border w-full py-3 px-2 my-2 rounded-md"
         />
@@ -42,6 +41,7 @@ const Input = ({ title, placeholder, type, name }) => {
           </p>
         )}
       </aside>
+      {error && <p className="text-red-500">{error?.message}</p>}
     </label>
   );
 };

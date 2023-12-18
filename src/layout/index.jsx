@@ -36,10 +36,6 @@ const RootLayout = () => {
   return (
     <div className="w-screen h-screen overflow-hidden bg-[#F5F5F5] flex items-start">
       <header
-        // className={cls(
-        //   'w-5/6 md:w-1/6 bg-red-500 h-full',
-        //   !isVisible ? 'hidden' : 'block'
-        // )}
         className={cls(
           'w-1/6 bg-white h-full',
           !isVisible ? 'hidden' : 'block'
