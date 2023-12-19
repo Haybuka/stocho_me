@@ -4,8 +4,27 @@ import * as z from 'zod';
 
 import Button from '../../components/button';
 import Input from '../../components/input';
+import { useLoginRequest } from '../../api/login/login';
+import { toast, ToastContainer } from 'react-toastify';
 
 const Login = () => {
+  const onSuccess = (response) => {
+    toast.success('success', response);
+    // localStorage.setItem('__token__', content.token);
+    // navigate('/');
+    // navigate(from, { replace: true });
+    window.location.reload();
+  };
+
+  const onError = (error) => {
+    toast.error(error?.message);
+  };
+
+  const options = {
+    onError,
+    onSuccess,
+  };
+  const { mutate: loginRequest } = useLoginRequest(options);
   const schema = z
     .object({
       email: z.string().email({ message: 'Email address is invalid' }),
@@ -20,7 +39,14 @@ const Login = () => {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (values) => {
+    handleLoginRequest(values);
+  };
+
+  const handleLoginRequest = (data) => {
+    loginRequest(data);
+  };
+
   return (
     <section className="w-screen h-screen flex justify-center items-center p-6">
       <form
@@ -67,6 +93,18 @@ const Login = () => {
           </div>
         </section>
       </form>
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </section>
   );
 };
