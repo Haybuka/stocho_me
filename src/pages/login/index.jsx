@@ -7,17 +7,24 @@ import Input from '../../components/input';
 import { useLoginRequest } from '../../api/login/login';
 import { toast, ToastContainer } from 'react-toastify';
 
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 const Login = () => {
+  const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const onSuccess = (response) => {
+    const data = response?.data;
     toast.success('success', response);
-    // localStorage.setItem('__token__', content.token);
-    // navigate('/');
-    // navigate(from, { replace: true });
-    window.location.reload();
+    localStorage.setItem('__token__', data?.access_token);
+    localStorage.setItem('__profile__', JSON.stringify(data?.data));
+    navigate('/');
+    setIsSubmitting(false);
   };
 
   const onError = (error) => {
-    toast.error(error?.message);
+    console.log(error);
+    toast.error(error?.response?.data?.message);
+    setIsSubmitting(false);
   };
 
   const options = {
@@ -44,6 +51,7 @@ const Login = () => {
   };
 
   const handleLoginRequest = (data) => {
+    setIsSubmitting(true);
     loginRequest(data);
   };
 
@@ -89,7 +97,7 @@ const Login = () => {
           />
 
           <div className="my-6">
-            <Button text={'Login'} />
+            <Button isSubmitting={isSubmitting} text={'Login'} />
           </div>
         </section>
       </form>

@@ -1,13 +1,22 @@
 import { createBrowserRouter } from 'react-router-dom';
 import RootLayout from '../layout';
+import ProtectedRoute from '../protectedRoute';
+
 import Dashboard from '../pages/dashboard';
 import Login from '../pages/login';
+import NotFound from '../pages/notFound';
 import Transactions from '../pages/transactions';
 
+const token = localStorage.getItem('__token__');
+console.log(token);
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <RootLayout />,
+    element: (
+      <ProtectedRoute>
+        <RootLayout />
+      </ProtectedRoute>
+    ),
     children: [
       {
         element: <Dashboard />,
@@ -22,6 +31,10 @@ const router = createBrowserRouter([
   {
     path: 'login',
     element: <Login />,
+  },
+  {
+    path: '*',
+    element: <NotFound />,
   },
 ]);
 
