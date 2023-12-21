@@ -11,6 +11,7 @@ import TransactIcon from '../assets/transactIcon';
 import { useState } from 'react';
 import ProfileIcon from '../assets/profileIcon';
 import TopBar from './topBar';
+import { useLogoutRequest } from '../api/auth';
 
 const navigations = [
   {
@@ -34,12 +35,15 @@ const RootLayout = () => {
     setIsVisible((prev) => !prev);
   };
 
+  const { mutate: logoutRequest } = useLogoutRequest();
+
   const handleLogout = () => {
     localStorage.clear();
+    logoutRequest();
     navigate('/login');
   };
   return (
-    <div className="w-screen h-screen overflow-hidden bg-[#F5F5F5] flex items-start">
+    <div className="w-screen h-screen overflow-hidden bg-[#F5F5F5] flex items-start ">
       <header
         className={cls(
           'w-5/6 md:w-2/6 lg:w-1/6 bg-white h-full transition-all overflow-x-hidden',
@@ -48,7 +52,7 @@ const RootLayout = () => {
       >
         <nav className="w-full px-2 flex justify-between flex-col h-full pb-12">
           <aside>
-            <h3 className="my-3 text-xl font-bold text-[#009947] flex items-center cursor-pointer">
+            <h3 className="my-3 text-md uppercase font-bold text-[#009947] flex items-center cursor-pointer">
               Stochostech
             </h3>
             <ul className="my-6">
@@ -98,7 +102,7 @@ const RootLayout = () => {
               <span>
                 <LogoutIcon />
               </span>
-              <span className="mx-3 inline-block">logout</span>
+              <span className="mx-3 inline-block">log out</span>
             </NavLink>
           </aside>
         </nav>
@@ -106,7 +110,7 @@ const RootLayout = () => {
 
       <main
         className={cls(
-          'w-full h-full transition-all',
+          'w-full h-full transition-all uppercase ',
           !isVisible ? 'ml-0' : 'ml-6'
         )}
       >

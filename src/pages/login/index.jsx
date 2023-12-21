@@ -2,9 +2,9 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 
+import { useLoginRequest } from '../../api/auth';
 import Button from '../../components/button';
 import Input from '../../components/input';
-import { useLoginRequest } from '../../api/login/login';
 import { toast, ToastContainer } from 'react-toastify';
 
 import { useNavigate } from 'react-router-dom';
@@ -39,7 +39,11 @@ const Login = () => {
 
   const onError = (error) => {
     console.log(error);
-    toast.error(error?.response?.data?.message);
+    if (error?.response?.data?.message) {
+      toast.error(error?.response?.data?.message);
+    } else {
+      toast.error(error?.message);
+    }
     setIsSubmitting(false);
   };
 

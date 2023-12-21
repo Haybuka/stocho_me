@@ -9,12 +9,12 @@ const TopBar = ({ handleVisibility }) => {
   const { profile } = useProfile();
 
   return (
-    <section className="bg-white rounded-b-xl p-4 flex justify-between items-center">
+    <section className="bg-white rounded-b-xl p-4 flex justify-between items-center uppercase text-sm">
       <aside className="flex">
         <div className="block cursor-pointer" onClick={handleVisibility}>
           <BurgerIcon />
         </div>
-        <p className="ml-4 capitalize hidden sm:block">
+        <p className="ml-4 hidden sm:block">
           {path?.length > 1 ? path : 'Dashboard'}
         </p>
       </aside>

@@ -1,5 +1,5 @@
 .navItem {
-  @apply my-3 py-3 capitalize relative cursor-pointer transition-all flex items-center;
+  @apply my-3 py-3 uppercase text-sm relative cursor-pointer transition-all flex items-center;
 }
 
 .navItem::after {

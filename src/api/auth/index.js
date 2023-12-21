@@ -9,8 +9,17 @@ const _loginUserRequest = async (data) => {
 }
 
 
+const _logoutUserRequest = async (data) => {
+
+  return axios.post('admin/logout', { ...data })
+}
+
 
 
 export const useLoginRequest = (options) => {
   return useMutation(_loginUserRequest, { ...options })
+}
+
+export const useLogoutRequest = (options) => {
+  return useMutation(_logoutUserRequest, { ...options })
 }
