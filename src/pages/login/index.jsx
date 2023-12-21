@@ -5,7 +5,7 @@ import * as z from 'zod';
 import { useLoginRequest } from '../../api/auth';
 import Button from '../../components/button';
 import Input from '../../components/input';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import { useNavigate } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
