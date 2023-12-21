@@ -1,6 +1,6 @@
 import { NavLink, Outlet } from 'react-router-dom';
 import styles from './nav.module.css';
-import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import '../App.css';
 
@@ -9,6 +9,8 @@ import cls from 'classname';
 import LogoutIcon from '../assets/logoutIcon';
 import TransactIcon from '../assets/transactIcon';
 import { useState } from 'react';
+import ProfileIcon from '../assets/profileIcon';
+import TopBar from './topBar';
 
 const navigations = [
   {
@@ -24,8 +26,7 @@ const navigations = [
 ];
 
 const RootLayout = () => {
-  const location = useLocation();
-  const path = location?.pathname?.slice(1);
+  const navigate = useNavigate();
 
   const [isVisible, setIsVisible] = useState(true);
 
@@ -33,11 +34,15 @@ const RootLayout = () => {
     setIsVisible((prev) => !prev);
   };
 
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate('/login');
+  };
   return (
     <div className="w-screen h-screen overflow-hidden bg-[#F5F5F5] flex items-start">
       <header
         className={cls(
-          'w-1/6 bg-white h-full',
+          'w-5/6 md:w-2/6 lg:w-1/6 bg-white h-full transition-all overflow-x-hidden',
           !isVisible ? 'hidden' : 'block'
         )}
       >
@@ -66,43 +71,50 @@ const RootLayout = () => {
               ))}
             </ul>
           </aside>
-          <NavLink
-            href={'/login'}
-            to={'/login'}
-            className={cls(styles.navItem)}
-          >
-            <span>
-              <LogoutIcon />
-            </span>
-            <span className="mx-3 inline-block">logout</span>
-          </NavLink>
+          <aside>
+            <NavLink
+              href={'/profile'}
+              to={'/profile'}
+              className={({ isActive }) =>
+                isActive
+                  ? cls(
+                      styles.navItem,
+                      `bg-green-300 rounded-full px-3 text-stochostech`
+                    )
+                  : cls(styles.navItem, ``)
+              }
+            >
+              <span>
+                <ProfileIcon />
+              </span>
+              <span className="mx-3 inline-block">Profile</span>
+            </NavLink>
+            <NavLink
+              href={'/login'}
+              to={'/login'}
+              className={cls(styles.navItem)}
+              onClick={handleLogout}
+            >
+              <span>
+                <LogoutIcon />
+              </span>
+              <span className="mx-3 inline-block">logout</span>
+            </NavLink>
+          </aside>
         </nav>
       </header>
 
-      <main className="w-full h-full">
-        <aside className="bg-white rounded-b-xl p-4 flex">
-          <p className="block cursor-pointer" onClick={handleVisibility}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12"
-              />
-            </svg>
-          </p>
-          <p className="ml-4 capitalize">
-            {path.length > 1 ? path : 'Dashboard'}
-          </p>
-        </aside>
-        <article className="p-3">
-          <Outlet />
+      <main
+        className={cls(
+          'w-full h-full transition-all',
+          !isVisible ? 'ml-0' : 'ml-6'
+        )}
+      >
+        <TopBar handleVisibility={handleVisibility} />
+        <article className="rounded-xl h-full my-3 overflow-hidden p-3">
+          <aside className="mb-10 h-full">
+            <Outlet />
+          </aside>
         </article>
       </main>
     </div>

@@ -6,9 +6,8 @@ import Dashboard from '../pages/dashboard';
 import Login from '../pages/login';
 import NotFound from '../pages/notFound';
 import Transactions from '../pages/transactions';
+import Profile from '../pages/profile';
 
-const token = localStorage.getItem('__token__');
-console.log(token);
 const router = createBrowserRouter([
   {
     path: '/',
@@ -25,6 +24,10 @@ const router = createBrowserRouter([
       {
         element: <Transactions />,
         path: '/transactions',
+      },
+      {
+        element: <Profile />,
+        path: '/profile',
       },
     ],
   },

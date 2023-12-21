@@ -8,10 +8,26 @@ import { useLoginRequest } from '../../api/login/login';
 import { toast, ToastContainer } from 'react-toastify';
 
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import useAuthenticated from '../../hooks/useAuthenticated';
 const Login = () => {
+  const { isAuthenticated } = useAuthenticated();
+
+  const handleAuth = useCallback(() => {
+    navigate('/');
+  }, []);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      handleAuth();
+      console.log('true');
+    }
+  }, [isAuthenticated, handleAuth]);
+
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // React query usage starts here
   const onSuccess = (response) => {
     const data = response?.data;
     toast.success('success', response);
@@ -31,7 +47,12 @@ const Login = () => {
     onError,
     onSuccess,
   };
+
   const { mutate: loginRequest } = useLoginRequest(options);
+
+  // React query usage ends here
+
+  // Zod validation
   const schema = z
     .object({
       email: z.string().email({ message: 'Email address is invalid' }),
@@ -46,6 +67,9 @@ const Login = () => {
     resolver: zodResolver(schema),
   });
 
+  // End of zod validation
+
+  // React hook form submission
   const onSubmit = (values) => {
     handleLoginRequest(values);
   };
@@ -54,6 +78,7 @@ const Login = () => {
     setIsSubmitting(true);
     loginRequest(data);
   };
+  // End of react hook form
 
   return (
     <section className="w-screen h-screen flex justify-center items-center p-6">
