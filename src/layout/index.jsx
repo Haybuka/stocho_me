@@ -115,7 +115,7 @@ const RootLayout = () => {
         )}
       >
         <TopBar handleVisibility={handleVisibility} />
-        <article className="rounded-xl h-full my-3 overflow-hidden p-3">
+        <article className="rounded-xl h-full my-3 overflow-hidden p-3 px-0">
           <aside className="mb-10 h-full">
             <Outlet />
           </aside>

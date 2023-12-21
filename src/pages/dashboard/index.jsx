@@ -7,7 +7,7 @@ import Card from './card';
 const Dashboard = () => {
   // React query usage starts here
   const onSuccess = () => {
-    toast.success('Data fetched');
+    toast.success('Dashboard Data fetched');
   };
 
   const onError = (error) => {
@@ -26,7 +26,6 @@ const Dashboard = () => {
     isFetching,
   } = useGetDashboardData(options);
 
-  console.log(dashboardData);
   if (loading || isFetching) {
     return (
       <main className="w-full h-full flex justify-center items-center">

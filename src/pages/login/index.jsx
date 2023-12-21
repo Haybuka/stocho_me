@@ -30,7 +30,7 @@ const Login = () => {
   // React query usage starts here
   const onSuccess = (response) => {
     const data = response?.data;
-    toast.success('success', response);
+    toast.success('success');
     localStorage.setItem('__token__', data?.access_token);
     localStorage.setItem('__profile__', JSON.stringify(data?.data));
     navigate('/');
@@ -38,7 +38,6 @@ const Login = () => {
   };
 
   const onError = (error) => {
-    console.log(error);
     if (error?.response?.data?.message) {
       toast.error(error?.response?.data?.message);
     } else {
@@ -130,18 +129,6 @@ const Login = () => {
           </div>
         </section>
       </form>
-      <ToastContainer
-        position="top-center"
-        autoClose={3000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
     </section>
   );
 };
