@@ -22,7 +22,7 @@ const NotFound = () => {
         <h3 className="text-xl  my-10">
           {isAuthenticated ? (
             <span className="block my-2 text-center">
-              looks like you took a wrong turn
+              looks like you took a wrongful turn
             </span>
           ) : (
             <span className="block my-2 text-center">
